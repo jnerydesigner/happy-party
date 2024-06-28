@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  Party      Party[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Party {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  date        DateTime
+  banner      String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id])
+
+  type_party    TypeParty @relation(fields: [type_party_id], references: [id])
+  type_party_id String    @unique
+
+  list_presents ListPresents?
+  married       Married?
+  birthdays     BirthDays?
+
+  @@map("parties")
+}
+
+model TypeParty {
+  id         String   @id @default(uuid())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  party      Party?
+
+  @@map("type_parties")
+}
+
+model ListPresents {
+  id         String     @id @default(uuid())
+  name       String
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  party      Party      @relation(fields: [party_id], references: [id])
+  party_id   String     @unique
+  Presents   Presents[]
+
+  @@map("list_presents")
+}
+
+model Presents {
+  id               String       @id @default(uuid())
+  name             String
+  image            String
+  url_sailers      String
+  created_at       DateTime     @default(now())
+  updated_at       DateTime     @updatedAt
+  list_presents    ListPresents @relation(fields: [list_presents_id], references: [id])
+  list_presents_id String       @unique
+
+  @@map("presents")
+}
+
+model PresentsHot {
+  id          String   @id @default(uuid())
+  name        String
+  image       String
+  url_sailers String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("presents_hot")
+}
+
+model Married {
+  id         String   @id @default(uuid())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  party      Party?   @relation(fields: [party_id], references: [id])
+  party_id   String?  @unique
+
+  @@map("married")
+}
+
+model BirthDays {
+  id         String   @id @default(uuid())
+  name       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  party      Party?   @relation(fields: [party_id], references: [id])
+  party_id   String?  @unique
+
+  @@map("birth_days")
+}
