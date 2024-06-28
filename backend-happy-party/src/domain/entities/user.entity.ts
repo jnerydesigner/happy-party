@@ -1,4 +1,4 @@
-import { EncryptPasswordUtil } from '@infra/utils/password.util';
+import { PasswordUtil } from '@infra/utils/password.util';
 import { randomUUID } from 'crypto';
 
 export class UserEntity {
@@ -13,7 +13,7 @@ export class UserEntity {
 
   static async createUser(name: string, email: string, password: string) {
     const id = randomUUID();
-    const pass = await new EncryptPasswordUtil().encrypt(password);
+    const pass = await new PasswordUtil().encrypt(password);
 
     return new UserEntity(name, email, pass, id);
   }

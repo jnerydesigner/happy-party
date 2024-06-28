@@ -1,4 +1,3 @@
-import { jwtConstants } from '@infra/auth/constants';
 import {
   CanActivate,
   ExecutionContext,
@@ -19,7 +18,7 @@ export class AuthGuard implements CanActivate {
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret,
+        secret: process.env.SECRET,
       });
 
       request['user'] = payload;

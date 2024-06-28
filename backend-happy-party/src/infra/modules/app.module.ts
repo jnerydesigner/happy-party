@@ -5,9 +5,16 @@ import { AppController } from '@presenters/controllers/app.controller';
 import { DatabaseModule } from './database.module';
 import { UserModule } from './user.module';
 import { AuthModule } from './auth.module';
+import { PresentsHotModule } from './presents-hot.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), DatabaseModule, UserModule, AuthModule],
+  imports: [
+    ConfigModule.forRoot(),
+    DatabaseModule,
+    UserModule,
+    AuthModule,
+    PresentsHotModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

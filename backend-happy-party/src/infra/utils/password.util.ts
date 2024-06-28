@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 
-export class EncryptPasswordUtil {
+export class PasswordUtil {
   private saltOrRounds: number = 10;
   async encrypt(password: string): Promise<string> {
     const hashPass = await bcrypt.hash(password, this.saltOrRounds);

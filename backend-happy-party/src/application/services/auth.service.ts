@@ -1,16 +1,16 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from './user.service';
-import { EncryptPasswordUtil } from '@infra/utils/password.util';
+import { PasswordUtil } from '@infra/utils/password.util';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  private password: EncryptPasswordUtil;
+  private password: PasswordUtil;
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {
-    this.password = new EncryptPasswordUtil();
+    this.password = new PasswordUtil();
   }
 
   async signIn(
