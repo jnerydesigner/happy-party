@@ -33,4 +33,11 @@ export class ListPresentsService {
       presentCreate,
     );
   }
+
+  async removePresentFromList(listPresentId: string, presentId: string) {
+    return this.listPresentsRepository.removePresentFromList(
+      listPresentId,
+      presentId,
+    );
+  }
 }

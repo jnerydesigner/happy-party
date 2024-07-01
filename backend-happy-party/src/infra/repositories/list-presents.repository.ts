@@ -8,4 +8,8 @@ export interface ListPresentsRepository {
     listPresentId: string,
     presentCreate: CreatePresentOnListDTO,
   ): Promise<any>;
+  removePresentFromList(
+    listPresentId: string,
+    presentId: string,
+  ): Promise<void>;
 }

@@ -1,7 +1,15 @@
 import { CreatePresentOnListDTO } from '@application/dto/create-presents-on-list.dto';
 import { ListPresentsCreateDTO } from '@application/dto/lis-presents-create.dto';
 import { ListPresentsService } from '@application/services/list-presents.service';
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 
 @Controller('list-presents')
 export class ListPresentsController {
@@ -29,6 +37,17 @@ export class ListPresentsController {
     return this.listPresentsService.addPresentToList(
       listPresentId,
       presentCreate,
+    );
+  }
+
+  @Delete(':listPresentId/:presentId')
+  async removePresentFromList(
+    @Param('listPresentId') listPresentId: string,
+    @Param('presentId') presentId: string,
+  ) {
+    return this.listPresentsService.removePresentFromList(
+      listPresentId,
+      presentId,
     );
   }
 }

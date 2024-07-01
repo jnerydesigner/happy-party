@@ -5,6 +5,7 @@ import { ListPresentsEntity } from '@domain/entities/list-presents.entity';
 import { ListPresentsMapper } from '@infra/database/mappers/list-presents.mapper';
 import { CreatePresentOnListDTO } from '@application/dto/create-presents-on-list.dto';
 import { ListPresentsResponse } from '@application/dto/pagination.dto';
+import { HttpException, HttpStatus } from '@nestjs/common';
 // import { ListPresentsMapper } from '@infra/database/mappers/list-presents.mapper';
 
 export class ListPresentsPrismaRepository implements ListPresentsRepository {
@@ -148,5 +149,51 @@ export class ListPresentsPrismaRepository implements ListPresentsRepository {
     });
 
     return ListPresentsMapper.toResponse(listPresent);
+  }
+
+  async removePresentFromList(
+    listPresentId: string,
+    presentId: string,
+  ): Promise<any> {
+    try {
+      const searchPresent =
+        await this.prismaService.listPresentOnPresentsHot.findFirst({
+          where: {
+            list_present_id: listPresentId,
+            present_hot_id: presentId,
+          },
+        });
+
+      if (!searchPresent) {
+        throw new Error('Present not found');
+      }
+
+      await this.prismaService.listPresentOnPresentsHot.delete({
+        where: {
+          list_present_id_present_hot_id: {
+            list_present_id: listPresentId,
+            present_hot_id: presentId,
+          },
+        },
+      });
+
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Present removed',
+      };
+    } catch (e) {
+      throw new HttpException('Present not found', HttpStatus.NOT_FOUND);
+    }
+
+    // const response = await this.prismaService.listPresentOnPresentsHot.delete({
+    //   where: {
+    //     list_present_id_present_hot_id: {
+    //       list_present_id: listPresentId,
+    //       present_hot_id: presentId,
+    //     },
+    //   },
+    // });
+
+    // console.log(response);
   }
 }
