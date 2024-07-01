@@ -6,14 +6,20 @@ import { DatabaseModule } from './database.module';
 import { UserModule } from './user.module';
 import { AuthModule } from './auth.module';
 import { PresentsHotModule } from './presents-hot.module';
+import { PartyModule } from './party.module';
+import { ListPresentsModule } from './list-presents.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     DatabaseModule,
     UserModule,
     AuthModule,
     PresentsHotModule,
+    PartyModule,
+    ListPresentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,3 +1,5 @@
+import { PresentHotCreateDTO } from '@application/dto/present-hot-create.dto';
+import { PresentHotEntity } from '@domain/entities/present-hot.entity';
 import { PresentsHotRepository } from '@infra/repositories/presents-hot.repository';
 import { Inject, Injectable } from '@nestjs/common';
 
@@ -11,5 +13,16 @@ export class PresentsHotService {
   async getPresentsHotAll(page: number, limit: number) {
     const skip = (page - 1) * limit;
     return this.presentsHotRepository.findAll(skip, limit);
+  }
+
+  async createPresentHot(presentHot: PresentHotCreateDTO) {
+    const presentHotEntity = PresentHotEntity.createPresentHot(
+      presentHot.name,
+      presentHot.image,
+      presentHot.urlSailers,
+      presentHot.price,
+    );
+
+    return this.presentsHotRepository.createPresentHot(presentHotEntity);
   }
 }

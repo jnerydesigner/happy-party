@@ -14,7 +14,7 @@ model User {
   password   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  Party      Party[]
+  party      Party[]
 
   @@index([email])
   @@map("users")
@@ -32,12 +32,11 @@ model Party {
   user_id String
   user    User   @relation(fields: [user_id], references: [id])
 
-  type_party    TypeParty @relation(fields: [type_party_id], references: [id])
-  type_party_id String    @unique
-
   list_presents ListPresents?
   married       Married?
   birthdays     BirthDays?
+  typePartyId   String?
+  typeParty     TypeParty?    @relation(fields: [typePartyId], references: [id])
 
   @@map("parties")
 }
@@ -47,43 +46,44 @@ model TypeParty {
   name       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  party      Party?
+  Party      Party[]
 
   @@map("type_parties")
 }
 
 model ListPresents {
-  id         String     @id @default(uuid())
-  name       String
-  created_at DateTime   @default(now())
-  updated_at DateTime   @updatedAt
-  party      Party      @relation(fields: [party_id], references: [id])
-  party_id   String     @unique
-  Presents   Presents[]
+  id                       String                     @id @default(uuid())
+  name                     String
+  created_at               DateTime                   @default(now())
+  updated_at               DateTime                   @updatedAt
+  party                    Party                      @relation(fields: [party_id], references: [id])
+  party_id                 String                     @unique
+  ListPresentOnPresentsHot ListPresentOnPresentsHot[]
 
   @@map("list_presents")
 }
 
-model Presents {
-  id               String       @id @default(uuid())
-  name             String
-  image            String
-  url_sailers      String
-  created_at       DateTime     @default(now())
-  updated_at       DateTime     @updatedAt
-  list_presents    ListPresents @relation(fields: [list_presents_id], references: [id])
-  list_presents_id String       @unique
+model ListPresentOnPresentsHot {
+  list_present_id String
+  list_present    ListPresents @relation(fields: [list_present_id], references: [id])
+  present_hot_id  String
+  present_hot     PresentsHot  @relation(fields: [present_hot_id], references: [id])
+  assingnedAt     DateTime     @default(now())
+  assignedBy      String
 
-  @@map("presents")
+  @@id([list_present_id, present_hot_id])
+  @@map("list_present_on_presents_hot")
 }
 
 model PresentsHot {
-  id          String   @id @default(uuid())
-  name        String
-  image       String
-  url_sailers String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  id                       String                     @id @default(uuid())
+  name                     String
+  image                    String
+  url_sailers              String
+  price                    Decimal                    @default(0) @db.Decimal(10, 2)
+  created_at               DateTime                   @default(now())
+  updated_at               DateTime                   @updatedAt
+  listPresentOnPresentsHot ListPresentOnPresentsHot[]
 
   @@map("presents_hot")
 }

@@ -5,6 +5,7 @@ import { UserService } from '@application/services/user.service';
 import { PrismaService } from '@infra/database/client/prisma.service';
 import { UserPrismaRepository } from '@infra/repositories/prisma/user-prisma.repository';
 import { UserRepository } from '@infra/repositories/user.repository';
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
 describe('UserService', () => {
@@ -21,6 +22,7 @@ describe('UserService', () => {
       providers: [
         UserService,
         PrismaService,
+        JwtService,
         {
           provide: 'USER_REPOSITORY',
           useClass: UserPrismaRepository,
