@@ -3,6 +3,7 @@ export type PresentHotResponse = {
   name: string;
   image: string;
   urlSailers: string;
+  price: number;
   createdAt: Date;
   updatedAt: Date;
 };

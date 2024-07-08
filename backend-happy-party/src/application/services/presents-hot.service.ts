@@ -1,5 +1,8 @@
 import { PresentHotCreateDTO } from '@application/dto/present-hot-create.dto';
-import { UpdatePresentDTO } from '@application/dto/present.validation.zod';
+import {
+  CreatePresentZodDTO,
+  UpdatePresentZodDTO,
+} from '@application/dto/present.validation.zod';
 import { PresentHotEntity } from '@domain/entities/present-hot.entity';
 import { PresentsHotRepository } from '@infra/repositories/presents-hot.repository';
 import { Inject, Injectable } from '@nestjs/common';
@@ -16,7 +19,7 @@ export class PresentsHotService {
     return this.presentsHotRepository.findAll(skip, limit);
   }
 
-  async createPresentHot(presentHot: PresentHotCreateDTO) {
+  async createPresentHot(presentHot: CreatePresentZodDTO) {
     const presentHotEntity = PresentHotEntity.createPresentHot(
       presentHot.name,
       presentHot.image,
@@ -27,7 +30,7 @@ export class PresentsHotService {
     return this.presentsHotRepository.createPresentHot(presentHotEntity);
   }
 
-  async updatePresentHot(id: string, presentHot: UpdatePresentDTO) {
+  async updatePresentHot(id: string, presentHot: UpdatePresentZodDTO) {
     const presentHotEntity = new PresentHotEntity(
       presentHot.name,
       presentHot.image,

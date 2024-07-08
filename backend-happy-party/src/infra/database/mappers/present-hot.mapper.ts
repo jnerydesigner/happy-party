@@ -11,6 +11,7 @@ type PresentHotPayloadDatabase = Prisma.PresentsHotGetPayload<{
     url_sailers: true;
     created_at: true;
     updated_at: true;
+    price?: true;
   };
 }>;
 
@@ -23,6 +24,7 @@ export class PresentHotMapper {
       urlSailers: presentHot.url_sailers,
       createdAt: new Date(presentHot.created_at),
       updatedAt: new Date(presentHot.updated_at),
+      price: Number(presentHot.price),
     };
   }
 

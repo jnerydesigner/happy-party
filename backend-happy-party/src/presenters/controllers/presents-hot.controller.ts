@@ -1,7 +1,7 @@
-import { PresentHotCreateDTO } from '@application/dto/present-hot-create.dto';
 import {
-  UpdatePresentDTO,
+  UpdatePresentZodDTO,
   UpdatePresentSchema,
+  CreatePresentZodDTO,
 } from '@application/dto/present.validation.zod';
 import { ZodPipe } from '@application/pipes/zod.pipe';
 import { PresentsHotService } from '@application/services/presents-hot.service';
@@ -25,13 +25,13 @@ export class PresentsHotController {
   }
 
   @Post()
-  async createPresentHot(@Body() body: PresentHotCreateDTO) {
+  async createPresentHot(@Body() body: CreatePresentZodDTO) {
     return this.presentsHotService.createPresentHot(body);
   }
 
   @Patch(':id')
   async updatePresentHot(
-    @Body(new ZodPipe(UpdatePresentSchema)) body: UpdatePresentDTO,
+    @Body(new ZodPipe(UpdatePresentSchema)) body: UpdatePresentZodDTO,
     @Param('id') id: string,
   ) {
     return this.presentsHotService.updatePresentHot(id, body);
