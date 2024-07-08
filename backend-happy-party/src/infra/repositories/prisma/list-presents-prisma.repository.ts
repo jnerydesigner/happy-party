@@ -3,7 +3,7 @@ import { ListPresentsRepository } from '../list-presents.repository';
 
 import { ListPresentsEntity } from '@domain/entities/list-presents.entity';
 import { ListPresentsMapper } from '@infra/database/mappers/list-presents.mapper';
-import { CreatePresentOnListDTO } from '@application/dto/create-presents-on-list.dto';
+import { CreatePresentOnListZodDTO } from '@application/dto/create-presents-on-list.dto';
 import { ListPresentsResponse } from '@application/dto/pagination.dto';
 import { HttpException, HttpStatus } from '@nestjs/common';
 // import { ListPresentsMapper } from '@infra/database/mappers/list-presents.mapper';
@@ -80,7 +80,7 @@ export class ListPresentsPrismaRepository implements ListPresentsRepository {
 
   async addPresentToList(
     listPresentId: string,
-    presentCreate: CreatePresentOnListDTO,
+    presentCreate: CreatePresentOnListZodDTO,
   ): Promise<any> {
     const listPresentOnExists =
       await this.prismaService.listPresentOnPresentsHot.findFirst({

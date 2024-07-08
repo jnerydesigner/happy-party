@@ -32,8 +32,6 @@ export class PartyPrismaRepository implements PartyRepository {
       },
     });
 
-    console.log(parties);
-
     const response = parties.map((party) => PartyMapper.toResponse(party));
 
     return response;

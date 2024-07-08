@@ -4,4 +4,5 @@ import { PresentHotEntity } from '@domain/entities/present-hot.entity';
 export interface PresentsHotRepository {
   findAll(page: number, limit: number): Promise<PresentsHotResponsePagination>;
   createPresentHot(presentHot: PresentHotEntity): Promise<any>;
+  updatePresentHot(id: string, presentHot: any): Promise<any>;
 }

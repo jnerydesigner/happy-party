@@ -17,6 +17,7 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "strict": true,
     "paths": {
       "@application/*": ["src/application/*"],
       "@domain/*": ["src/domain/*"],
@@ -24,4 +25,5 @@
       "@presenters/*": ["src/presenters/*"]
     }
   }
+  
 }

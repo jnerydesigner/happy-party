@@ -101,14 +101,6 @@ interface TypeParty {
   updatedAt: Date;
 }
 
-interface ListPresents {
-  id: string;
-  name: string;
-  createdAt: Date;
-  updatedAt: Date;
-  partyId: string;
-}
-
 interface Married {
   id: string;
   name: string;

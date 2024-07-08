@@ -42,4 +42,30 @@ export class PresentsHotPrismaRepository implements PresentsHotRepository {
 
     return PresentHotMapper.toResponse(presentHotCreated);
   }
+
+  async updatePresentHot(id: string, presentHot: any): Promise<any> {
+    const present = await this.prismaService.presentsHot.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!present) {
+      return null;
+    }
+
+    const data = {
+      ...present,
+      ...presentHot,
+    };
+
+    const presentUpdated = await this.prismaService.presentsHot.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return presentUpdated;
+  }
 }

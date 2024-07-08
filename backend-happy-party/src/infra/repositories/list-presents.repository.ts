@@ -1,4 +1,4 @@
-import { CreatePresentOnListDTO } from '@application/dto/create-presents-on-list.dto';
+import { CreatePresentOnListZodDTO } from '@application/dto/create-presents-on-list.dto';
 import { ListPresentsEntity } from '@domain/entities/list-presents.entity';
 
 export interface ListPresentsRepository {
@@ -6,7 +6,7 @@ export interface ListPresentsRepository {
   listAll(page: number, limit: number, userId: string): Promise<any>;
   addPresentToList(
     listPresentId: string,
-    presentCreate: CreatePresentOnListDTO,
+    presentCreate: CreatePresentOnListZodDTO,
   ): Promise<any>;
   removePresentFromList(
     listPresentId: string,

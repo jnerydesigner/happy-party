@@ -1,4 +1,4 @@
-import { CreatePresentOnListDTO } from '@application/dto/create-presents-on-list.dto';
+import { CreatePresentOnListZodDTO } from '@application/dto/create-presents-on-list.dto';
 import { ListPresentsCreateDTO } from '@application/dto/lis-presents-create.dto';
 import { ListPresentsEntity } from '@domain/entities/list-presents.entity';
 import { ListPresentsRepository } from '@infra/repositories/list-presents.repository';
@@ -26,7 +26,7 @@ export class ListPresentsService {
 
   async addPresentToList(
     listPresentId: string,
-    presentCreate: CreatePresentOnListDTO,
+    presentCreate: CreatePresentOnListZodDTO,
   ) {
     return this.listPresentsRepository.addPresentToList(
       listPresentId,

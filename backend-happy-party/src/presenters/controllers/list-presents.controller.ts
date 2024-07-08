@@ -1,6 +1,9 @@
 import { CreatePresentOnListDTO } from '@application/dto/create-presents-on-list.dto';
 import { ListPresentsCreateDTO } from '@application/dto/lis-presents-create.dto';
+import { DeletePresentOnListDTO } from '@application/dto/list-presents.validation.zod';
+import { ZodPipe } from '@application/pipes/zod.pipe';
 import { ListPresentsService } from '@application/services/list-presents.service';
+import { AuthGuard } from '@infra/security/autentication/auth.guard';
 import {
   Body,
   Controller,
@@ -9,7 +12,10 @@ import {
   Param,
   Post,
   Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 
 @Controller('list-presents')
 export class ListPresentsController {
@@ -20,19 +26,21 @@ export class ListPresentsController {
     return this.listPresentsService.createListPresents(listPresents);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':userId')
   async findAllListPresents(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
-    @Param('userId') userId: string,
+    @Req() req: Request,
   ) {
+    const userId = req.user.id;
     return this.listPresentsService.findAllListPresents(page, limit, userId);
   }
 
   @Post(':listPresentId')
   async addPresentToList(
     @Param('listPresentId') listPresentId: string,
-    @Body() presentCreate: CreatePresentOnListDTO,
+    @Body(new ZodPipe(CreatePresentOnListDTO)) presentCreate,
   ) {
     return this.listPresentsService.addPresentToList(
       listPresentId,
@@ -40,14 +48,13 @@ export class ListPresentsController {
     );
   }
 
-  @Delete(':listPresentId/:presentId')
+  @Delete('/delete')
   async removePresentFromList(
-    @Param('listPresentId') listPresentId: string,
-    @Param('presentId') presentId: string,
+    @Body(new ZodPipe(DeletePresentOnListDTO)) presentDelete,
   ) {
     return this.listPresentsService.removePresentFromList(
-      listPresentId,
-      presentId,
+      presentDelete.listPresentId,
+      presentDelete.presentId,
     );
   }
 }
