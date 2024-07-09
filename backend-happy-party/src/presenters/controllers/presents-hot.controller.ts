@@ -14,14 +14,19 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Presents Hot')
 @Controller('presents-hot')
 export class PresentsHotController {
   constructor(private readonly presentsHotService: PresentsHotService) {}
 
   @Get()
   findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
-    return this.presentsHotService.getPresentsHotAll(page, limit);
+    return this.presentsHotService.getPresentsHotAll(
+      Number(page),
+      Number(limit),
+    );
   }
 
   @Post()

@@ -3,9 +3,6 @@ import { PresentsHotRepository } from '../presents-hot.repository';
 import { PresentHotMapper } from '@infra/database/mappers/present-hot.mapper';
 import { PresentsHotResponsePagination } from '@application/dto/presents-hot.pagination.dto';
 import { PresentHotEntity } from '@domain/entities/present-hot.entity';
-import {Prisma} from '@prisma/client'
-
-const prisma = new PrismaService();
 
 export class PresentsHotPrismaRepository implements PresentsHotRepository {
   constructor(private readonly prismaService: PrismaService) {}
@@ -14,7 +11,6 @@ export class PresentsHotPrismaRepository implements PresentsHotRepository {
     page: number,
     limit: number,
   ): Promise<PresentsHotResponsePagination> {
-    /let where: Prisma.PresentsHotWhereInput = {};
     const presentsHot = await this.prismaService.presentsHot.findMany({
       skip: page,
       take: limit,

@@ -15,8 +15,10 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
+@ApiTags('List Presents')
 @Controller('list-presents')
 export class ListPresentsController {
   constructor(private readonly listPresentsService: ListPresentsService) {}

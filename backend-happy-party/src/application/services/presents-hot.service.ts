@@ -1,4 +1,3 @@
-import { PresentHotCreateDTO } from '@application/dto/present-hot-create.dto';
 import {
   CreatePresentZodDTO,
   UpdatePresentZodDTO,
@@ -31,14 +30,6 @@ export class PresentsHotService {
   }
 
   async updatePresentHot(id: string, presentHot: UpdatePresentZodDTO) {
-    const presentHotEntity = new PresentHotEntity(
-      presentHot.name,
-      presentHot.image,
-      presentHot.urlSailers,
-      presentHot.price,
-      id,
-    );
-
     return this.presentsHotRepository.updatePresentHot(id, presentHot);
   }
 }
